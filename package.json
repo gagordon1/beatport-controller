@@ -1,0 +1,25 @@
+{
+  "name": "beatport-controller",
+  "version": "1.0.0",
+  "description": "automatically add searches to a cart in beatport",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagordon1/beatport-controller.git"
+  },
+  "author": "Garrett Gordon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gagordon1/beatport-controller/issues"
+  },
+  "homepage": "https://github.com/gagordon1/beatport-controller#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "puppeteer": "^15.3.2",
+    "websocket": "^1.0.34",
+    "ws": "^8.8.0"
+  }
+}
