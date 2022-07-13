@@ -29,8 +29,9 @@ app.post('/addToCart', async (req, res) => {
 		const username = req.body.username;
 		const password = req.body.password;
 		const result = await controller.addToBeatportCart(username, password, searches)
-	
-  		res.send('Hello World!')
+
+		res.send(JSON.stringify({badSearches : result}))
+  		
 	}catch(error){
 		res.status(400).send(error)
 	}
