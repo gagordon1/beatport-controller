@@ -9,6 +9,7 @@ function sleep (time) {
 async function login (p, un, pw){
 	console.log("logging in...")
 	await p.goto("https://www.beatport.com/account/login", {waitUntil: 'load'});
+	await clearCookieMenu(p)
 	await p.$eval('input#username', (el,un) => {return el.value=un}, un);
 	await p.$eval('input#password', (el,pw) => {return el.value=pw}, pw);
 
