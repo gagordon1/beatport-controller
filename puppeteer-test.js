@@ -1,3 +1,5 @@
 var controller = require('./controller');
 var testVariables = require('./test-config.js') //hidden from github
-controller.addToBeatportCart(testVariables.un, testVariables.pw, testVariables.searches)
+const progress = {toProcess : 3, badSearches: []}
+controller.addToBeatportCart(testVariables.un, testVariables.pw, 
+	testVariables.searches, progress)
