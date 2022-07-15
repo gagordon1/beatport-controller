@@ -4,7 +4,7 @@ const controller = require("./controller.js")
 const { v4: uuidv4 } = require('uuid');
 
 //Setting
-const DEVELOPMENT = true;
+const DEVELOPMENT = false;
 const port = 8080
 const DEVELOPMENT_FRONTEND = "http://localhost:3000"
 const PRODUCTION_FRONTEND = "http://dj-assistant-frontend.herokuapp.com"
