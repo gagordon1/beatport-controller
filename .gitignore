@@ -106,5 +106,3 @@ dist
 test-config.js
 
 .DS_Store
-
-screenshots/.+

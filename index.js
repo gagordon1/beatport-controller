@@ -1,16 +1,17 @@
 const express = require('express')
 const app = express()
-
-const SECONDS_IN_A_DAY = 86400
-const DEVELOPMENT = true;
-const port = 8080
-const DEVELOPMENT_FRONTEND = "http://localhost:3000"
-const PRODUCTION_FRONTEND = ""
 const controller = require("./controller.js")
 const { v4: uuidv4 } = require('uuid');
 
-const STATUS_TIMEOUT = 1000 * 1000 //milliseconds in 1000 seconds
-const CLEANUP_INTERVAL =   60 * 1000 // milliseconds in a day
+//Setting
+const DEVELOPMENT = true;
+const port = 8080
+const DEVELOPMENT_FRONTEND = "http://localhost:3000"
+const PRODUCTION_FRONTEND = "http://dj-assistant-frontend.herokuapp.com"
+
+const SECONDS_IN_A_DAY = 86400
+const STATUS_TIMEOUT = 5000 * 1000 //milliseconds in 5000 seconds
+const CLEANUP_INTERVAL =   SECONDS_IN_A_DAY * 1000 // milliseconds in a day
 
 const status = {}
 
