@@ -1,6 +1,6 @@
-const puppeteer = require('puppeteer');
+
 const vs = require('./valid_search.js');
-const WAIT_TIME = 4000
+const WAIT_TIME = 3000
 const DEV = true
 
 function sleep (time) {
@@ -19,11 +19,6 @@ async function login (p, un, pw){
 		p.$eval('button.login-page-form-button', button => button.click())
 		await p.waitForNavigation();
 	})
-	.then(() => {
-		if(DEV){
-			p.screenshot({path: `./screenshots/login.png`});
-		}
-	})
 	
 }
 
@@ -33,12 +28,6 @@ async function searchTrack(s, p){
 	let url = `https://www.beatport.com/search/tracks?q=${searchString}`
 	p.goto(url)
 	await p.waitForNavigation()
-	.then(() => {
-		if(DEV){
-			p.screenshot({path: `./screenshots/screenshot_search.png`});
-		}
-	}
-	)
 }
 
 async function addFirstResultToCart(s,p){
@@ -47,13 +36,7 @@ async function addFirstResultToCart(s,p){
 		console.log("	clicking cart menu...")
 		p.$eval("div.icon", icon => icon.click());
 	})
-	.then(() => sleep(WAIT_TIME))
-	.then(()=>{
-		
-		if (DEV){
-			p.screenshot({path: `./screenshots/cart.png`});
-		}
-	})
+	.then(() => sleep(WAIT_TIME/2))
 	.then(() => {
 			console.log("	clicking main cart...")
 			p.$$eval(`li[data-name^="cart"]`, e => {
@@ -95,9 +78,7 @@ module.exports = {
 
 		returns String[]
 	**/
-	addToBeatportCart : async (username, password, searches, progress) => {
-		const browser = await puppeteer.launch();
-		const page = await browser.newPage();
+	addToBeatportCart : async (browser, page, username, password, searches, progress) => {
 		
 		//login
 		await login(page, username, password)

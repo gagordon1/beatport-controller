@@ -1,10 +1,12 @@
 const express = require('express')
+const puppeteer = require('puppeteer');
+
 const app = express()
 const controller = require("./controller.js")
 const { v4: uuidv4 } = require('uuid');
 
 //Setting
-const DEVELOPMENT = false;
+const DEVELOPMENT = true;
 const port = 8080
 const DEVELOPMENT_FRONTEND = "http://localhost:3000"
 const PRODUCTION_FRONTEND = "http://dj-assistant-frontend.herokuapp.com"
@@ -74,8 +76,12 @@ app.post('/addToCart', async (req, res) => {
 		const username = req.body.username;
 		const password = req.body.password;
 		const statusId = uuidv4()
+
 		status[statusId] = {badSearches : [], toProcess : searches.length, started : new Date().getTime()}
-		controller.addToBeatportCart(username, password, searches, status[statusId])
+
+		const browser = await puppeteer.launch();
+		const page = await browser.newPage();
+		controller.addToBeatportCart(browser, page, username, password, searches, status[statusId])
 		res.send(JSON.stringify({statusId : statusId, status : status[statusId]}))
   		
 	}catch(error){
