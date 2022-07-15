@@ -12,7 +12,7 @@ const test = async() => {
 
 	const recorder = new PuppeteerScreenRecorder(testPage);
 
-	const savePath = './screenshots/demo.mp4';
+	const savePath = './screenshots/demo2.mp4';
 	await recorder.start(savePath);
 
 	await controller.addToBeatportCart(browser, testPage, testVariables.un, testVariables.pw, 

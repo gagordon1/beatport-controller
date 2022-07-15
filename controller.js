@@ -1,6 +1,7 @@
 
 const vs = require('./valid_search.js');
-const WAIT_TIME = 3000
+const WAIT_TIME_1 = 1500
+const WAIT_TIME_2 = 3000
 const DEV = true
 
 function sleep (time) {
@@ -36,14 +37,14 @@ async function addFirstResultToCart(s,p){
 		console.log("	clicking cart menu...")
 		p.$eval("div.icon", icon => icon.click());
 	})
-	.then(() => sleep(WAIT_TIME/2))
+	.then(() => sleep(WAIT_TIME_1))
 	.then(() => {
 			console.log("	clicking main cart...")
 			p.$$eval(`li[data-name^="cart"]`, e => {
 			e[e.length-1].click() //there are two on the page for some reason - should investigate further
 		})
 	})
-	.then(() => sleep(WAIT_TIME) )
+	.then(() => sleep(WAIT_TIME_2) )
 }
 
 async function checkIfValidResult(s, p){
