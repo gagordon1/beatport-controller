@@ -107,4 +107,4 @@ test-config.js
 
 .DS_Store
 
-screenshots/
+screenshots/*
