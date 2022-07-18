@@ -6,7 +6,7 @@ const controller = require("./controller.js")
 const { v4: uuidv4 } = require('uuid');
 
 //Setting
-const DEVELOPMENT = true;
+const DEVELOPMENT = false;
 const port = 8080
 const DEVELOPMENT_FRONTEND = "http://localhost:3000"
 const PRODUCTION_FRONTEND = "http://dj-assistant-frontend.herokuapp.com"
@@ -83,7 +83,7 @@ app.post('/addToCart', async (req, res) => {
 		if (!(await controller.login(page, username, password))){
 			console.log("invalid log in ")
 			browser.close()
-			res.status(400).send({message : "Invalid login."})
+			res.status(400).send("Invalid login.")
 			return
 		}else{
 			console.log("logged in successfully.")
