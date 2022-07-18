@@ -15,8 +15,16 @@ const test = async() => {
 	const savePath = './screenshots/demo2.mp4';
 	await recorder.start(savePath);
 
-	await controller.addToBeatportCart(browser, testPage, testVariables.un, testVariables.pw, 
-		testVariables.searches, progress)
+	let loggedIn = await controller.login(testPage, testVariables.un, testVariables.pw) 
+
+	if (loggedIn){
+		await controller.addToBeatportCart(browser, testPage, testVariables.searches, progress)
+
+	}else{
+		browser.close()
+	}
+
+	
 
 	await recorder.stop()
 }

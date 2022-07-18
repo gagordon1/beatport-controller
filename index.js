@@ -1,4 +1,4 @@
-const express = require('express')
+ const express = require('express')
 const puppeteer = require('puppeteer');
 
 const app = express()
@@ -75,14 +75,26 @@ app.post('/addToCart', async (req, res) => {
 		const searches = req.body.searches
 		const username = req.body.username;
 		const password = req.body.password;
-		const statusId = uuidv4()
-
-		status[statusId] = {badSearches : [], toProcess : searches.length, started : new Date().getTime()}
-
+		
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
-		controller.addToBeatportCart(browser, page, username, password, searches, status[statusId])
-		res.send(JSON.stringify({statusId : statusId, status : status[statusId]}))
+
+		//login
+		if (!(await controller.login(page, username, password))){
+			console.log("invalid log in ")
+			browser.close()
+			res.status(400).send({message : "Invalid login."})
+			return
+		}else{
+			console.log("logged in successfully.")
+			//search a track
+			const statusId = uuidv4()
+			status[statusId] = {badSearches : [], toProcess : searches.length, started : new Date().getTime()}
+			controller.addToBeatportCart(browser, page, searches, status[statusId])
+			res.send(JSON.stringify({statusId : statusId, status : status[statusId]}))
+		}
+		
+		
   		
 	}catch(error){
 		res.status(500).send(error)

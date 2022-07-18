@@ -1,26 +1,11 @@
 
 const vs = require('./valid_search.js');
 const WAIT_TIME_1 = 1500
-const WAIT_TIME_2 = 3000
+const WAIT_TIME_2 = 4000
 const DEV = true
 
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
-}
-
-async function login (p, un, pw){
-	console.log("logging in...")
-	await p.goto("https://www.beatport.com/account/login", {waitUntil: 'load'})
-	.then(() => clearCookieMenu(p))
-	.then(() => p.$eval('input#username', (el,un) => {return el.value=un}, un))
-	.then(() => p.$eval('input#password', (el,pw) => {return el.value=pw}, pw))
-
-	.then(() => clearCookieMenu(p))
-	.then(async () => {
-		p.$eval('button.login-page-form-button', button => button.click())
-		await p.waitForNavigation();
-	})
-	
 }
 
 async function searchTrack(s, p){
@@ -69,21 +54,17 @@ async function clearCookieMenu (p) {
 module.exports = {
 
 	/*
-	logs into beatport then searches each track and adds the top result to the cart one by one
+	searches each track and adds the top result to the cart one by one
 	skips if the top result is does not match the search according to a deterministic function
-
-		username : String
-		password : String
+		browser : Puppeteer browser object
+		page : Puppeteer page object
 		searches : array of searches for beatport
 		progress : {toProcess : int, badSearches : String[]}
 
 		returns String[]
 	**/
-	addToBeatportCart : async (browser, page, username, password, searches, progress) => {
-		
-		//login
-		await login(page, username, password)
-		//search a track
+	addToBeatportCart : async (browser, page, searches, progress) => {
+
 		var search;
 		for (i = 0; i <searches.length; i++){
 			search = searches[i]
@@ -102,5 +83,40 @@ module.exports = {
 		}
 		console.log("finished.")
     browser.close();
-	}
+	},
+
+	/**
+	 * Logs in given a page, username and password returns true if successful login,
+	 * false otherwise.
+	 * page : Puppeteer page object
+	 * un : String
+	 * pw : String
+	 * 
+	 * Returns boolean
+	 */
+	login : async (p, un, pw)  => {
+		console.log("logging in...")
+		p.goto("https://www.beatport.com/account/login")
+		return await p.waitForNavigation()
+		.then(() => clearCookieMenu(p))
+		.then(() => p.$eval('input#username', (el,un) => {return el.value=un}, un))
+		.then(() => p.$eval('input#password', (el,pw) => {return el.value=pw}, pw))
+
+		.then(() => clearCookieMenu(p))
+		.then(async () => {
+			p.$eval('button.login-page-form-button', button => button.click())
+			await p.waitForNavigation();
+		}).then(()=>{
+			let url = p.url()
+			if(url === "https://www.beatport.com/account/login"){
+				return false
+			}else if(url === "https://www.beatport.com/"){
+				return true
+			}
+			return false
+		})
+	
+}
+
+
 }
