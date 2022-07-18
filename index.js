@@ -75,7 +75,7 @@ app.post('/addToCart', async (req, res) => {
 		const searches = req.body.searches
 		const username = req.body.username;
 		const password = req.body.password;
-		
+		console.log(searches)
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
 

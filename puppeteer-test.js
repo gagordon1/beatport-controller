@@ -18,7 +18,7 @@ const test = async() => {
 	let loggedIn = await controller.login(testPage, testVariables.un, testVariables.pw) 
 
 	if (loggedIn){
-		await controller.addToBeatportCart(browser, testPage, testVariables.searches, progress)
+		await controller.addToBeatportCart(browser, testPage, testVariables.tayKSearches, progress)
 
 	}else{
 		browser.close()

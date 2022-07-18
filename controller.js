@@ -1,7 +1,7 @@
 
 const vs = require('./valid_search.js');
-const WAIT_TIME_1 = 1500
-const WAIT_TIME_2 = 4000
+const WAIT_TIME_1 = 3000
+const WAIT_TIME_2 = 2000
 const DEV = true
 
 function sleep (time) {
